@@ -1,5 +1,8 @@
-﻿<h3>AccessControl</h3>
-
-@code {
-    
-}
+﻿<AuthorizeView>
+    <Authorized>        
+        <a href="logout">Log out</a>
+    </Authorized>
+    <NotAuthorized>
+        <a href="login?redirectUri=/">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>

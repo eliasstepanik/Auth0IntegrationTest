@@ -1,8 +1,17 @@
+using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Auth0IntegrationTest.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// 👇 new code
+builder.Services
+    .AddAuth0WebAppAuthentication(options => {
+        options.Domain = builder.Configuration["Auth0:Domain"];
+        options.ClientId = builder.Configuration["Auth0:ClientId"];
+    });
+// 👆 new code
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -24,6 +33,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication(); // 👈 new code
+app.UseAuthorization();  // 👈 new code
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
